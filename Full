@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<!--This project is based on an algorithm presented to me by a college student working on his thesis to present,
+called a gematria. Inside of the input element, you would enter your sentence or characters from the hebrew
+language. For this example, we'll use Genesis 1:1 from the Torah. Simply copy and paste the text below:
+
+ְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ:
+
+The characters are written in a binary system, starting from 1 to 9, then 10, 20, 30 through 90, then 100, 200, 300
+and 400. Some characters do share a value as is how the characters work in hebrew language.
+
+The first algorithm takes the value of each letter entered multiplied against each other. The product is then
+multiplied by how many letters there are.
+
+The second algorithm takes each word separately and adds the values, then the sum of each word is multiplied
+against each other. The product is then multiplied by the number of words there are.
+
+The third algorithm takes the product of the letters and divides it by the product of the words. In this case, the
+outcome of the algorithm comes out to the first 5 characters of Pi: 3.1415.-->
+<html>
+<head>
+</head>
+<body>
+	<input id="Input" type="text" oninput="valueString(); valueArray(); lettersArray(); letters(); call(); division();" autofocus/>
+	<div id="ProductofLetters"></div>
+	<div id="ProductofWords"></div>
+	<div id="Quotient"></div>
+</body>
+<script>
+		var inputString = document.getElementById("Input").value;
+		var inputArray = [];
+		var words = [];
+		
+		function valueString () {
+			inputString = document.getElementById("Input").value;
+			return inputString;
+		}
+		
+		function valueArray () {
+			inputString = document.getElementById("Input").value;
+			inputArray = inputString.split(" ");
+			return inputArray;
+		}
+		
+		function lettersArray () {
+			var input = document.getElementById("Input").value;
+			var etnahta = input.replaceAll("ָ", "");
+			var segol = etnahta.replaceAll("֒", "");
+			var shalshelet = segol.replaceAll("֓", "");
+			var zaqefQatan = shalshelet.replaceAll("֔", "");
+			var zaqefGadol = zaqefQatan.replaceAll("֕", "");
+			var tipeha = zaqefGadol.replaceAll("֖", "");
+			var revia = tipeha.replaceAll("֗", "");
+			var zarqa = revia.replaceAll("֘", "");
+			var pashta = zarqa.replaceAll("֙֙", "");
+			var yetiv = pashta.replaceAll("֚", "");
+			var tevir = yetiv.replaceAll("֛", "");
+			var geresh = tevir.replaceAll("֜", "");
+			var gereshMuqdam = geresh.replaceAll("֝", "");
+			var gershayim = gereshMuqdam.replaceAll("֞", "");
+			var qarneyPara = gershayim.replaceAll("֟", "");
+			var telishaGedola = qarneyPara.replaceAll("֠", "");
+			var pazer = telishaGedola.replaceAll("֡", "");
+			var atnahHafukh = pazer.replaceAll("֢", "");
+			var munah = atnahHafukh.replaceAll("֣", "");
+			var mahapakh = munah.replaceAll("֤", "");
+			var merkha = mahapakh.replaceAll("֥", "");
+			var merkhaKefula = merkha.replaceAll("֦", "");
+			var darga = merkhaKefula.replaceAll("֧", "");
+			var qadma = darga.replaceAll("֨", "");
+			var telishaQetana = qadma.replaceAll("֩", "");
+			var yerahBenYomo = telishaQetana.replaceAll("֪", "");
+			var ole = yerahBenYomo.replaceAll("֫", "");
+			var iluy = ole.replaceAll("֬", "");
+			var dehi = iluy.replaceAll("֭", "");
+			var zinor = dehi.replaceAll("֮", "");
+			var masoraCircle = zinor.replaceAll("֯", "");
+			var sheva = masoraCircle.replaceAll("ְ", "");
+			var hatafSegol = sheva.replaceAll("ֱ", "");
+			var hatafPatah = hatafSegol.replaceAll("ֲ", "");
+			var hatafQamats = hatafPatah.replaceAll("ֳ", "");
+			var hiriq = hatafQamats.replaceAll("ִ", "");
+			var tsere = hiriq.replaceAll("ֵ", "");
+			var patah = tsere.replaceAll("ַ", "");
+			var qamats = patah.replaceAll("ָ", "");
+			var holam = qamats.replaceAll("ֹ", "");
+			var holamHaserForVav = holam.replaceAll("ֺ", "");
+			var qubuts = holamHaserForVav.replaceAll("ֻ", "");
+			var dageshOrMapiq = qubuts.replaceAll("ּ", "");
+			var meteq = dageshOrMapiq.replaceAll("ֽ", "");
+			var maqaf = meteq.replaceAll("־", "");
+			var rafe = maqaf.replaceAll("ֿ", "");
+			var paseq = rafe.replaceAll("׀", "");
+			var shinDot = paseq.replaceAll("ׁ", "");
+			var sinDot = shinDot.replaceAll("ׂ", "");
+			var sofPasuq = sinDot.replaceAll("׃", "");
+			var upperDot = sofPasuq.replaceAll("ׄ", "");
+			var nunHafukha = upperDot.replaceAll("׆", "");
+			var qamatsQatan = nunHafukha.replaceAll("ׇ", "");
+			var segolPoint = qamatsQatan.replaceAll("ֶֶ", "");
+			var noSpaces = segolPoint.split(" "); //turn each word of the string into an array, removing the spaces
+			var characters = noSpaces.join(""); //turn all items of the array into one string
+			var array = characters.split(""); //turn each character of the string into an individual array
+			var letters = [];//the new array
+			var i;
+			for (i = 0; i < array.length; i++)
+				if (array[i] == "א") {
+					letters.push(1);
+				} else if (array[i] == "ב") {
+					letters.push(2);
+				} else if (array[i] == "ג") {
+					letters.push(3);
+				} else if (array[i] == "ד") {
+					letters.push(4);
+				} else if (array[i] == "ה") {
+					letters.push(5);
+				} else if (array[i] == "ו") {
+					letters.push(6);
+				} else if (array[i] == "ז") {
+					letters.push(7);
+				} else if (array[i] == "ח") {
+					letters.push(8);
+				} else if (array[i] == "ט") {
+					letters.push(9);
+				} else if (array[i] == "י") {
+					letters.push(10);
+				} else if (array[i] == "ך" || array[i] == "כ") {
+					letters.push(20);
+				} else if (array[i] == "ל") {
+					letters.push(30);
+				} else if (array[i] == "ם" || array[i] == "מ") {
+					letters.push(40);
+				} else if (array[i] == "ן" || array[i] == "נ") {
+					letters.push(50);
+				} else if (array[i] == "ס") {
+					letters.push(60);
+				} else if (array[i] == "ע") {
+					letters.push(70);
+				} else if (array[i] == "ף" || array[i] == "פ") {
+					letters.push(80);
+				} else if (array[i] == "ץ" || array[i] == "צ") {
+					letters.push(90);
+				} else if (array[i] == "ק") {
+					letters.push(100);
+				} else if (array[i] == "ר") {
+					letters.push(200);
+				} else if (array[i] == "ש") {
+					letters.push(300);
+				} else if (array[i] == "ת") {
+					letters.push(400);
+				} else {
+					//Do nothing
+				}
+				return letters;
+			}
+			
+		function letters() {
+			var hold = lettersArray(document.getElementById("Input").value);
+			document.getElementById("ProductofLetters").innerHTML = hold.reduce((a, b) => a * b, 1) * hold.length;
+		}
+			
+		function wordsArray (item) {
+			var etnahta = item.replaceAll("ָ", "");
+			var segol = etnahta.replaceAll("֒", "");
+			var shalshelet = segol.replaceAll("֓", "");
+			var zaqefQatan = shalshelet.replaceAll("֔", "");
+			var zaqefGadol = zaqefQatan.replaceAll("֕", "");
+			var tipeha = zaqefGadol.replaceAll("֖", "");
+			var revia = tipeha.replaceAll("֗", "");
+			var zarqa = revia.replaceAll("֘", "");
+			var pashta = zarqa.replaceAll("֙֙", "");
+			var yetiv = pashta.replaceAll("֚", "");
+			var tevir = yetiv.replaceAll("֛", "");
+			var geresh = tevir.replaceAll("֜", "");
+			var gereshMuqdam = geresh.replaceAll("֝", "");
+			var gershayim = gereshMuqdam.replaceAll("֞", "");
+			var qarneyPara = gershayim.replaceAll("֟", "");
+			var telishaGedola = qarneyPara.replaceAll("֠", "");
+			var pazer = telishaGedola.replaceAll("֡", "");
+			var atnahHafukh = pazer.replaceAll("֢", "");
+			var munah = atnahHafukh.replaceAll("֣", "");
+			var mahapakh = munah.replaceAll("֤", "");
+			var merkha = mahapakh.replaceAll("֥", "");
+			var merkhaKefula = merkha.replaceAll("֦", "");
+			var darga = merkhaKefula.replaceAll("֧", "");
+			var qadma = darga.replaceAll("֨", "");
+			var telishaQetana = qadma.replaceAll("֩", "");
+			var yerahBenYomo = telishaQetana.replaceAll("֪", "");
+			var ole = yerahBenYomo.replaceAll("֫", "");
+			var iluy = ole.replaceAll("֬", "");
+			var dehi = iluy.replaceAll("֭", "");
+			var zinor = dehi.replaceAll("֮", "");
+			var masoraCircle = zinor.replaceAll("֯", "");
+			var sheva = masoraCircle.replaceAll("ְ", "");
+			var hatafSegol = sheva.replaceAll("ֱ", "");
+			var hatafPatah = hatafSegol.replaceAll("ֲ", "");
+			var hatafQamats = hatafPatah.replaceAll("ֳ", "");
+			var hiriq = hatafQamats.replaceAll("ִ", "");
+			var tsere = hiriq.replaceAll("ֵ", "");
+			var patah = tsere.replaceAll("ַ", "");
+			var qamats = patah.replaceAll("ָ", "");
+			var holam = qamats.replaceAll("ֹ", "");
+			var holamHaserForVav = holam.replaceAll("ֺ", "");
+			var qubuts = holamHaserForVav.replaceAll("ֻ", "");
+			var dageshOrMapiq = qubuts.replaceAll("ּ", "");
+			var meteq = dageshOrMapiq.replaceAll("ֽ", "");
+			var maqaf = meteq.replaceAll("־", "");
+			var rafe = maqaf.replaceAll("ֿ", "");
+			var paseq = rafe.replaceAll("׀", "");
+			var shinDot = paseq.replaceAll("ׁ", "");
+			var sinDot = shinDot.replaceAll("ׂ", "");
+			var sofPasuq = sinDot.replaceAll("׃", "");
+			var upperDot = sofPasuq.replaceAll("ׄ", "");
+			var nunHafukha = upperDot.replaceAll("׆", "");
+			var qamatsQatan = nunHafukha.replaceAll("ׇ", "");
+			var segolPoint = qamatsQatan.replaceAll("ֶֶ", "");
+			var noSpaces = segolPoint.split(" "); //turn each word of the string into an array, removing the spaces
+			var characters = noSpaces.join(""); //turn all items of the array into one string
+			var array = characters.split(""); //turn each character of the string into an individual array
+			var letters = [];//the new array
+			var i;
+			for (i = 0; i < array.length; i++)
+				if (array[i] == "א") {
+					letters.push(1);
+				} else if (array[i] == "ב") {
+					letters.push(2);
+				} else if (array[i] == "ג") {
+					letters.push(3);
+				} else if (array[i] == "ד") {
+					letters.push(4);
+				} else if (array[i] == "ה") {
+					letters.push(5);
+				} else if (array[i] == "ו") {
+					letters.push(6);
+				} else if (array[i] == "ז") {
+					letters.push(7);
+				} else if (array[i] == "ח") {
+					letters.push(8);
+				} else if (array[i] == "ט") {
+					letters.push(9);
+				} else if (array[i] == "י") {
+					letters.push(10);
+				} else if (array[i] == "ך" || array[i] == "כ") {
+					letters.push(20);
+				} else if (array[i] == "ל") {
+					letters.push(30);
+				} else if (array[i] == "ם" || array[i] == "מ") {
+					letters.push(40);
+				} else if (array[i] == "ן" || array[i] == "נ") {
+					letters.push(50);
+				} else if (array[i] == "ס") {
+					letters.push(60);
+				} else if (array[i] == "ע") {
+					letters.push(70);
+				} else if (array[i] == "ף" || array[i] == "פ") {
+					letters.push(80);
+				} else if (array[i] == "ץ" || array[i] == "צ") {
+					letters.push(90);
+				} else if (array[i] == "ק") {
+					letters.push(100);
+				} else if (array[i] == "ר") {
+					letters.push(200);
+				} else if (array[i] == "ש") {
+					letters.push(300);
+				} else if (array[i] == "ת") {
+					letters.push(400);
+				} else {
+					//Do nothing
+				}
+				return letters;
+			}
+		
+		const sum = (a, b) => a + b;
+		
+		function multiply (array) {
+		var product = 1;
+		for (var n = 0; n < array.length; n++) {
+			product = product * array[n];
+		}
+		document.getElementById("ProductofWords").innerHTML = product * array.length;
+	}
+		
+		function translate (item) {
+			var etnahta = item.replaceAll("ָ", "");
+			var segol = etnahta.replaceAll("֒", "");
+			var shalshelet = segol.replaceAll("֓", "");
+			var zaqefQatan = shalshelet.replaceAll("֔", "");
+			var zaqefGadol = zaqefQatan.replaceAll("֕", "");
+			var tipeha = zaqefGadol.replaceAll("֖", "");
+			var revia = tipeha.replaceAll("֗", "");
+			var zarqa = revia.replaceAll("֘", "");
+			var pashta = zarqa.replaceAll("֙֙", "");
+			var yetiv = pashta.replaceAll("֚", "");
+			var tevir = yetiv.replaceAll("֛", "");
+			var geresh = tevir.replaceAll("֜", "");
+			var gereshMuqdam = geresh.replaceAll("֝", "");
+			var gershayim = gereshMuqdam.replaceAll("֞", "");
+			var qarneyPara = gershayim.replaceAll("֟", "");
+			var telishaGedola = qarneyPara.replaceAll("֠", "");
+			var pazer = telishaGedola.replaceAll("֡", "");
+			var atnahHafukh = pazer.replaceAll("֢", "");
+			var munah = atnahHafukh.replaceAll("֣", "");
+			var mahapakh = munah.replaceAll("֤", "");
+			var merkha = mahapakh.replaceAll("֥", "");
+			var merkhaKefula = merkha.replaceAll("֦", "");
+			var darga = merkhaKefula.replaceAll("֧", "");
+			var qadma = darga.replaceAll("֨", "");
+			var telishaQetana = qadma.replaceAll("֩", "");
+			var yerahBenYomo = telishaQetana.replaceAll("֪", "");
+			var ole = yerahBenYomo.replaceAll("֫", "");
+			var iluy = ole.replaceAll("֬", "");
+			var dehi = iluy.replaceAll("֭", "");
+			var zinor = dehi.replaceAll("֮", "");
+			var masoraCircle = zinor.replaceAll("֯", "");
+			var sheva = masoraCircle.replaceAll("ְ", "");
+			var hatafSegol = sheva.replaceAll("ֱ", "");
+			var hatafPatah = hatafSegol.replaceAll("ֲ", "");
+			var hatafQamats = hatafPatah.replaceAll("ֳ", "");
+			var hiriq = hatafQamats.replaceAll("ִ", "");
+			var tsere = hiriq.replaceAll("ֵ", "");
+			var patah = tsere.replaceAll("ַ", "");
+			var qamats = patah.replaceAll("ָ", "");
+			var holam = qamats.replaceAll("ֹ", "");
+			var holamHaserForVav = holam.replaceAll("ֺ", "");
+			var qubuts = holamHaserForVav.replaceAll("ֻ", "");
+			var dageshOrMapiq = qubuts.replaceAll("ּ", "");
+			var meteq = dageshOrMapiq.replaceAll("ֽ", "");
+			var maqaf = meteq.replaceAll("־", "");
+			var rafe = maqaf.replaceAll("ֿ", "");
+			var paseq = rafe.replaceAll("׀", "");
+			var shinDot = paseq.replaceAll("ׁ", "");
+			var sinDot = shinDot.replaceAll("ׂ", "");
+			var sofPasuq = sinDot.replaceAll("׃", "");
+			var upperDot = sofPasuq.replaceAll("ׄ", "");
+			var nunHafukha = upperDot.replaceAll("׆", "");
+			var qamatsQatan = nunHafukha.replaceAll("ׇ", "");
+			var segolPoint = qamatsQatan.replaceAll("ֶֶ", "");
+			var itemArray = segolPoint.split("");
+			let binary = [];
+			for (var i = 0; i < itemArray.length; i++)
+			if (itemArray[i] == "א") {
+					binary.push(1);
+				} else if (itemArray[i] == "ב") {
+					binary.push(2);
+				} else if (itemArray[i] == "ג") {
+					binary.push(3);
+				} else if (itemArray[i] == "ד") {
+					binary.push(4);
+				} else if (itemArray[i] == "ה") {
+					binary.push(5);
+				} else if (itemArray[i] == "ו") {
+					binary.push(6);
+				} else if (itemArray[i] == "ז") {
+					binary.push(7);
+				} else if (itemArray[i] == "ח") {
+					binary.push(8);
+				} else if (itemArray[i] == "ט") {
+					binary.push(9);
+				} else if (itemArray[i] == "י") {
+					binary.push(10);
+				} else if (itemArray[i] == "ך" || itemArray[i] == "כ") {
+					binary.push(20);
+				} else if (itemArray[i] == "ל") {
+					binary.push(30);
+				} else if (itemArray[i] == "ם" || itemArray[i] == "מ") {
+					binary.push(40);
+				} else if (itemArray[i] == "ן" || itemArray[i] == "נ") {
+					binary.push(50);
+				} else if (itemArray[i] == "ס") {
+					binary.push(60);
+				} else if (itemArray[i] == "ע") {
+					binary.push(70);
+				} else if (itemArray[i] == "ף" || itemArray[i] == "פ") {
+					binary.push(80);
+				} else if (itemArray[i] == "ץ" || itemArray[i] == "צ") {
+					binary.push(90);
+				} else if (itemArray[i] == "ק") {
+					binary.push(100);
+				} else if (itemArray[i] == "ר") {
+					binary.push(200);
+				} else if (itemArray[i] == "ש") {
+					binary.push(300);
+				} else if (itemArray[i] == "ת") {
+					binary.push(400);
+				} else {
+					//Do nothing
+				}
+			return words.push(binary.reduce(sum));
+		}
+			
+		function call () {
+			inputArray.forEach(translate);
+			words;
+			return multiply(words);
+		}
+		
+		function division () {
+			var letterProduct = document.getElementById("ProductofLetters").innerHTML;
+			var wordProduct = document.getElementById("ProductofWords").innerHTML;
+			document.getElementById("Quotient").innerHTML = letterProduct / wordProduct;
+		}
+</script>
+</html>
