@@ -3,7 +3,7 @@
 called a gematria. Inside of the input element, you would enter your sentence or characters from the hebrew
 language. For this example, we'll use Genesis 1:1 from the Torah. Simply copy and paste the text below:
 
-ְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ:
+בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ:
 
 The characters are written in a binary system, starting from 1 to 9, then 10, 20, 30 through 90, then 100, 200, 300
 and 400. Some characters do share a value as is how the characters work in hebrew language.
